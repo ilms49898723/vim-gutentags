@@ -18,15 +18,19 @@ endfunction
 
 " Show an error message.
 function! gutentags#error(message)
-    let v:errmsg = "gutentags: " . a:message
-    echoerr v:errmsg
+    if get(g:, 'gutentags_suppress_error_message', 0) == 0
+        let v:errmsg = "gutentags: " . a:message
+        echoerr v:errmsg
+    endif
 endfunction
 
 " Show a warning message.
 function! gutentags#warning(message)
-    echohl WarningMsg
-    echom "gutentags: " . a:message
-    echohl None
+    if get(g:, 'gutentags_suppress_warning_message', 0) == 0
+        echohl WarningMsg
+        echom "gutentags: " . a:message
+        echohl None
+    endif
 endfunction
 
 " Prints a message if debug tracing is enabled.
@@ -112,7 +116,7 @@ else
             " Thanks Vimscript... you can use negative integers for strings
             " in the slice notation, but not for indexing characters :(
             let l:arglen = strlen(cmdarg)
-            if (cmdarg[0] == '"' && cmdarg[l:arglen - 1] == '"') || 
+            if (cmdarg[0] == '"' && cmdarg[l:arglen - 1] == '"') ||
                         \(cmdarg[0] == "'" && cmdarg[l:arglen - 1] == "'")
                 call add(l:outcmd, cmdarg[1:-2])
             else
@@ -250,7 +254,7 @@ function! gutentags#setup_gutentags() abort
     "  other such things)
     " Also don't do anything for the default `[No Name]` buffer you get
     " after starting Vim.
-    if &buftype != '' || 
+    if &buftype != '' ||
           \(bufname('%') == '' && !g:gutentags_generate_on_empty_buffer)
         return
     endif
@@ -495,10 +499,10 @@ function! s:update_tags(bufno, module, write_mode, queue_mode) abort
                 endif
             endfor
             if l:needs_queuing
-                call add(s:update_queue[a:module], 
+                call add(s:update_queue[a:module],
                             \[l:tags_file, a:bufno, a:write_mode])
             endif
-            call gutentags#trace("Tag file '" . l:tags_file . 
+            call gutentags#trace("Tag file '" . l:tags_file .
                         \"' is already being updated. Queuing it up...")
         elseif a:queue_mode == 1
             call gutentags#trace("Tag file '" . l:tags_file .
@@ -702,4 +706,3 @@ function! gutentags#statusline_cb(fmt_cb, ...) abort
 endfunction
 
 " }}}
-

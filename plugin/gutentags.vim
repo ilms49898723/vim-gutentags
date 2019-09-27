@@ -28,8 +28,8 @@ if (exists('g:loaded_gutentags') && g:gutentags_debug)
 endif
 let g:loaded_gutentags = 1
 
-let g:gutentags_suppress_warning_message = get(g:, 'gutentags_suppress_warning_message', 0)
-let g:gutentags_suppress_error_message = get(g:, 'gutentags_suppress_error_message', 0)
+let g:gutentags_suppress_warning_messages = get(g:, 'gutentags_suppress_warning_messages', 0)
+let g:gutentags_suppress_error_messages = get(g:, 'gutentags_suppress_error_messages', 0)
 
 let g:gutentags_trace = get(g:, 'gutentags_trace', 0)
 let g:gutentags_fake = get(g:, 'gutentags_fake', 0)

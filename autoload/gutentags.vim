@@ -18,7 +18,7 @@ endfunction
 
 " Show an error message.
 function! gutentags#error(message)
-    if get(g:, 'gutentags_suppress_error_message', 0) == 0
+    if get(g:, 'gutentags_suppress_error_messages', 0) == 0
         let v:errmsg = "gutentags: " . a:message
         echoerr v:errmsg
     endif
@@ -26,7 +26,7 @@ endfunction
 
 " Show a warning message.
 function! gutentags#warning(message)
-    if get(g:, 'gutentags_suppress_warning_message', 0) == 0
+    if get(g:, 'gutentags_suppress_warning_messages', 0) == 0
         echohl WarningMsg
         echom "gutentags: " . a:message
         echohl None
